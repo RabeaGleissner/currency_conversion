@@ -1,16 +1,23 @@
 <h1>Currency conversion from the past</h1>
-
 <%= form_for @conn, Routes.page_path(@conn, :convert), fn f -> %>
-  <label>
-    Convert: <%= text_input f, :amount, autofocus: "" %>
-    <%= select(f, :from, ["EUR": "eur", "GBP": "gbp", "USD": "usd"]) %>
-  </label>
-  <label>
-    To: <%= select(f, :to, ["EUR": "eur", "GBP": "gbp", "USD": "usd"]) %>
-  </label>
-  <label>
-    On: <%= text_input f, :date, autofocus: "", type: "date" %>
-  </label>
+  <div>
+    <label>
+      Convert: <%= text_input f, :amount, autofocus: "" %>
+      <%= select(f, :from, ["EUR": "eur", "GBP": "gbp", "USD": "usd"]) %>
+    </label>
+  </div>
+  <div>
+    <label>
+      To: <%= select(f, :to, ["EUR": "eur", "GBP": "gbp", "USD": "usd"]) %>
+    </label>
+  </div>
+  <div>
+    <label>
+      On: <%= text_input f, :date, autofocus: "", type: "date" %>
+    </label>
+  </div>
   <%= submit "Go" %>
-  Converted amount: <%= @converted_amount %>
+  <div>
+    Converted amount: <%= @converted_amount %>
+  </div>
 <% end %>

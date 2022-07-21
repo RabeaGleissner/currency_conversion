@@ -1,18 +1,21 @@
-# CurrencyConversion
+# Currency converter from the past
 
-To start your Phoenix server:
+Easily convert amounts of money using the rates from past dates.
 
-  * Install dependencies with `mix deps.get`
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+Currency API used: https://exchangerate.host/
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+## Technical
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+- Mocking with Mox
+- Using session to keep track of data
 
-## Learn more
+Next:
+- caching response with ETS
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+
+## How to run it
+
+* Install dependencies with `mix deps.get`
+* Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+
+Now visit [`localhost:4000`](http://localhost:4000)

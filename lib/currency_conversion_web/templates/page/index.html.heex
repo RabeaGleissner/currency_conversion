@@ -18,8 +18,8 @@
   </div>
   <%= submit "Go" %>
   <div>
-    <%= if @converted_amount do %>
-      Converted amount: <%= @converted_amount %>
+    <%= if @converted_amount != "" do %>
+      Converted amount: <%= format_amount(@converted_amount) %>
     <% end %>
   </div>
 <% end %>

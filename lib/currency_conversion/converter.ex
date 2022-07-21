@@ -9,3 +9,5 @@ defmodule CurrencyConversion.Converter do
     end
   end
 end
+
+#%{date: "2022-07-20", historical: true, info: %{rate: 1.017935}, motd: %{msg: "If you or your company use this project or like what we doing, please consider backing us so we can continue maintaining and evolving this project.", url: "https://exchangerate.host/#/donate"}, query: %{amount: 1, from: "EUR", to: "USD"}, result: 1.017935, success: true}

@@ -1,7 +1,7 @@
 defmodule CurrencyConversion.RequestHandler do
   def get(url) do
     url
-    |> HTTPoison.get()
+    |> http_client().get()
     |> case do
       {:ok, %HTTPoison.Response{body: raw_body, status_code: code}} -> {code, raw_body}
       {:error, %HTTPoison.Error{reason: reason}} -> {:error, reason}
@@ -14,6 +14,10 @@ defmodule CurrencyConversion.RequestHandler do
         _ -> {:error, body}
       end
     end).()
+  end
+
+  defp http_client do
+    Application.get_env(:currency_conversion, :http_client)
   end
 end
 

@@ -6,11 +6,27 @@ Currency API used: https://exchangerate.host/
 
 ## Technical
 
-- Mocking with Mox
 - Using session to keep track of data
+- Caching API response with ETS
+- Mocking with Mox
 
 Next:
-- caching response with ETS
+- styling with Tailwind
+
+
+### ETS table schema
+
+- Key: currency from + currency to
+- Value: date, rate
+
+Insert:
+:ets.insert_new(:api_cache, {"USDEUR", "2012/10/22", 0.45})
+
+Retrieve:
+:ets.match_object(:api_cache, {:"USDEUR", :"2012/10/22", :"$3"})
+
+Example return data:
+[{"USDEUR", "2012/10/22", 0.45}]
 
 
 ## How to run it

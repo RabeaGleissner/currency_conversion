@@ -18,12 +18,12 @@
   </div>
   <%= submit "Go" %>
   <div>
-    <%= if @converted_amount != "" do %>
+    <%= if @converted_amount do %>
       Converted amount: <%= format_amount(@converted_amount) %>
     <% end %>
   </div>
   <div>
-    <%= if @error != "" do %>
+    <%= if @error do %>
       <%= format_error_message(@error) %>
     <% end %>
   </div>

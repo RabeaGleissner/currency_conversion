@@ -9,4 +9,12 @@ defmodule CurrencyConversionWeb.PageViewTest do
   test "Returns empty string if the amount is not a float" do
     assert PageView.format_amount("") == ""
   end
+
+  test "Formats error message when there is one" do
+    assert PageView.format_error_message(true) == "Apologies, there was an error!"
+  end
+
+  test "Returns epmty string for error when there is none" do
+    assert PageView.format_error_message(nil) == ""
+  end
 end

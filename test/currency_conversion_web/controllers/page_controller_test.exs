@@ -25,7 +25,7 @@ defmodule CurrencyConversionWeb.PageControllerTest do
 
   test "GET /convert displays converted amount after redirect", %{conn: conn} do
     expect(HTTPoison.BaseMock, :get, fn _ -> {:ok, %HTTPoison.Response {
-      body: "{\"success\":true,\"result\":102}",
+      body: "{\"success\":true,\"result\":102.0}",
       status_code: 200}
     } end)
 
@@ -34,5 +34,19 @@ defmodule CurrencyConversionWeb.PageControllerTest do
 
     conn = get(recycle(conn), redir_path)
     assert html_response(conn, 200) =~ "102"
+  end
+
+  test "GET /convert displays error message when API returns error", %{conn: conn} do
+    expect(HTTPoison.BaseMock, :get, fn _ -> {:error, %HTTPoison.Error{
+      id: nil,
+      reason: :nxdomain
+      }
+    } end)
+
+    conn = get(conn, Routes.page_path(conn, :convert), %{amount: "100", from: "USD", to: "GBP", date: "2022-06-16"})
+    assert "/" = redir_path = redirected_to(conn, 302)
+
+    conn = get(recycle(conn), redir_path)
+    assert html_response(conn, 200) =~ "Apologies, there was an error"
   end
 end

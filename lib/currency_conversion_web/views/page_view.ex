@@ -7,4 +7,11 @@ defmodule CurrencyConversionWeb.PageView do
       false -> ""
     end
   end
+
+  def format_error_message(is_error) do
+    case is_error do
+      true -> "Apologies, there was an error!"
+      _ -> ""
+    end
+  end
 end

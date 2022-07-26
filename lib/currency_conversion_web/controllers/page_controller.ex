@@ -27,7 +27,7 @@ defmodule CurrencyConversionWeb.PageController do
     |> redirect(to: Routes.page_path(conn, :index))
   end
 
-  defp update_session(conn, {:ok, converted_amount: converted_amount }) do
+  defp update_session(conn, {:ok, converted_amount: converted_amount}) do
     conn
     |> put_session(:converted_amount, converted_amount)
   end
@@ -55,7 +55,7 @@ defmodule CurrencyConversionWeb.PageController do
       {:ok, converted_amount: converted_amount, rate: rate} ->
         ApiCache.insert(from<>to, date, rate)
         {:ok, converted_amount: converted_amount}
-      {:error, _} -> {:error, true}
+      {:error, message: message} -> {:error, message: message}
     end
   end
 

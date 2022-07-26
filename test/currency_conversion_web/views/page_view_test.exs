@@ -2,8 +2,12 @@ defmodule CurrencyConversionWeb.PageViewTest do
   use CurrencyConversionWeb.ConnCase, async: true
   alias CurrencyConversionWeb.PageView
 
-  test "Formats amount with two decimals" do
+  test "Formats float amount with two decimals" do
     assert PageView.format_amount(98.237989) == "98.24"
+  end
+
+  test "Formats integer amount with two decimals" do
+    assert PageView.format_amount(120) == "120.00"
   end
 
   test "Returns empty string if the amount is not a float" do

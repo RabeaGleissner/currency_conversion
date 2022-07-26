@@ -1,10 +1,16 @@
 defmodule CurrencyConversionWeb.PageControllerTest do
   use CurrencyConversionWeb.ConnCase
   use ExUnit.Case, async: true
-
   import Mox
 
+  alias CurrencyConversion.ApiCache
+
   setup :verify_on_exit!
+  setup do
+    on_exit(fn ->
+      ApiCache.delete_entry("USDGBP")
+    end)
+  end
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")
@@ -13,7 +19,7 @@ defmodule CurrencyConversionWeb.PageControllerTest do
 
   test "GET /convert redirects to root page", %{conn: conn} do
     expect(HTTPoison.BaseMock, :get, fn _ -> {:ok, %HTTPoison.Response {
-      body: "{\"success\":true,\"result\":102}",
+      body: "{\"success\":true,\"result\":102,\"info\":{\"rate\": 0.5}}",
       status_code: 200}
     } end)
 
@@ -25,7 +31,7 @@ defmodule CurrencyConversionWeb.PageControllerTest do
 
   test "GET /convert displays converted amount after redirect", %{conn: conn} do
     expect(HTTPoison.BaseMock, :get, fn _ -> {:ok, %HTTPoison.Response {
-      body: "{\"success\":true,\"result\":102.0}",
+      body: "{\"success\":true,\"result\":102,\"info\":{\"rate\": 0.5}}",
       status_code: 200}
     } end)
 

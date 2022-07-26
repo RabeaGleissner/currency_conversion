@@ -11,6 +11,7 @@ defmodule CurrencyConversion.RequestHandler do
   defp decode(json) do
     json
     |> Poison.decode(keys: :atoms)
+    |> IO.inspect
     |> case do
       {:ok, parsed} -> {:ok, parsed}
       _ -> {:error, "JSON decode failed"}

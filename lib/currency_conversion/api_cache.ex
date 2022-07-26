@@ -19,6 +19,10 @@ defmodule CurrencyConversion.ApiCache do
     GenServer.call(@name, {:retrieve, {key, date}})
   end
 
+  def delete_entry(key) do
+    GenServer.call(@name, {:delete_entry, key})
+  end
+
   def handle_call({:insert, data}, _ref, state) do
     :ets.insert_new(:currency_api_cache, data)
     {:reply, :ok, state}
@@ -32,5 +36,10 @@ defmodule CurrencyConversion.ApiCache do
         [{_, _, rate}] = cached_data
         {:reply, [rate], []}
     end
+  end
+
+  def handle_call({:delete_entry, key}, _ref, state) do
+    :ets.delete(:currency_api_cache, key)
+    {:reply, [], []}
   end
 end

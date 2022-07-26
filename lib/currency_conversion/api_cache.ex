@@ -30,7 +30,7 @@ defmodule CurrencyConversion.ApiCache do
       true -> {:reply, state, []}
       false ->
         [{_, _, rate}] = cached_data
-        {:reply, rate, []}
+        {:reply, [rate], []}
     end
   end
 end

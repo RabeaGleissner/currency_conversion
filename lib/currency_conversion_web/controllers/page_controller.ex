@@ -38,20 +38,22 @@ defmodule CurrencyConversionWeb.PageController do
   end
 
   defp rate_cached?(key, date) do
-    rate = ApiCache.retrieve(key, date)
-    if rate do
-      {:ok, %{rate: 100000000000}}
-    else
+    cache_result = ApiCache.retrieve(key, date)
+    if Enum.empty?(cache_result) do
+      IO.puts("it's not cached...")
       {:empty}
+    else
+      IO.puts("it's cached!!!")
+      [rate] = cache_result
+      {:ok, %{rate: rate}}
     end
   end
 
   defp handle_api_call(from, to, date, amount) do
     result = Converter.get_historical_rate(from, to, date, amount)
-    placeholder_rate = 5
     case result do
-      {:ok, converted_amount: converted_amount} ->
-        ApiCache.insert(from<>to, date, placeholder_rate)
+      {:ok, converted_amount: converted_amount, rate: rate} ->
+        ApiCache.insert(from<>to, date, rate)
         {:ok, converted_amount: converted_amount}
       {:error, _} -> {:error, true}
     end

@@ -2,7 +2,7 @@
 <%= form_for @conn, Routes.page_path(@conn, :convert), [method: "get"], fn f -> %>
   <div>
     <label>
-      Convert: <%= text_input f, :amount, autofocus: "" %>
+      Convert: <%= text_input f, :amount, autofocus: "", placeholder: "0.00" %>
       <%= select(f, :from, ["EUR": "eur", "GBP": "gbp", "USD": "usd"]) %>
     </label>
   </div>

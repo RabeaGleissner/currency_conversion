@@ -1,30 +1,32 @@
-<h1 class="text-3xl font-bold underline">Currency conversion from the past</h1>
-<%= form_for @conn, Routes.page_path(@conn, :convert), [method: "get"], fn f -> %>
-  <div>
-    <label>
-      Convert: <%= text_input f, :amount, autofocus: "" %>
-      <%= select(f, :from, ["EUR": "eur", "GBP": "gbp", "USD": "usd"]) %>
-    </label>
-  </div>
-  <div>
-    <label>
-      To: <%= select(f, :to, ["EUR": "eur", "GBP": "gbp", "USD": "usd"]) %>
-    </label>
-  </div>
-  <div>
-    <label>
-      On: <%= text_input f, :date, autofocus: "", type: "date" %>
-    </label>
-  </div>
-  <%= submit "Go" %>
-  <div>
-    <%= if @converted_amount do %>
-      Converted amount: <%= format_amount(@converted_amount) %>
+<div class="w-screen h-screen bg-slate-50 overflow-hidden">
+  <div class="p-8 mt-12 max-w-lg mx-auto bg-white rounded-xl shadow-lg items-center">
+    <h1 class="text-2xl mb-2 font-bold">Historical currency conversion</h1>
+    <p class="mb-8">Convert an amount at a date in the past.</p>
+    <%= form_for @conn, Routes.page_path(@conn, :convert), [method: "get"], fn f -> %>
+      <div class="mb-6">
+        <label class="w-16 inline-block" for="conversion-amount"> Convert: </label>
+        <%= text_input f, :amount, autofocus: "", id: "conversion-amount", placeholder: "0.00" %>
+        <%= select(f, :from, ["EUR": "eur", "GBP": "gbp", "USD": "usd", "SGD": "sgd", "AUD": "aud", "IDR": "idr", "MYR": "myr", "HUF": "huf", "CNY": "cny"]) %>
+      </div>
+      <div class="mb-6">
+        <label class="w-16 inline-block"  for="target-currency">To:</label>
+        <%= select(f, :to, ["EUR": "eur", "GBP": "gbp", "USD": "usd", "SGD": "sgd", "AUD": "aud", "IDR": "idr", "MYR": "myr", "HUF": "huf", "CNY": "cny"]) %>
+      </div>
+      <div class="mb-10 flex items-baseline">
+        <label class="w-16 inline-block"  for="date">On:</label>
+        <%= text_input f, :date, autofocus: "", type: "date", id: "date", class: "" %>
+        <%= submit "Go", class: "ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+      </div>
+      <%= if @converted_amount !== "" do %>
+        <p class="font-bold text-lg border-dotted border-t-2 border-cyan-200 py-3">
+        Converted amount: <%= format_amount(@converted_amount) %>
+        </p>
+      <% end %>
+      <div>
+        <%= if @error do %>
+          <%= format_error_message(@error) %>
+        <% end %>
+      </div>
     <% end %>
   </div>
-  <div>
-    <%= if @error do %>
-      <%= format_error_message(@error) %>
-    <% end %>
-  </div>
-<% end %>
+</div>

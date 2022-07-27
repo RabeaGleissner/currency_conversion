@@ -16,7 +16,8 @@ config :currency_conversion, CurrencyConversionWeb.Endpoint,
   secret_key_base: "z1p3dcUnszHQJiYPownyMO1FprUQmI5IsSMu7x1CUxSxDNcrssWB8idwCS3iosHf",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support

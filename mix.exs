@@ -48,6 +48,7 @@ defmodule CurrencyConversion.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:httpoison, "~> 1.8"},
       {:poison, "~> 5.0"},
+      {:tailwind, "~>0.1", runtime: Mix.env() == :dev},
       {:mox, "~> 1.0.2", only: :test}
     ]
   end
@@ -61,7 +62,7 @@ defmodule CurrencyConversion.MixProject do
   defp aliases do
     [
       setup: ["deps.get"],
-      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
     ]
   end
 end

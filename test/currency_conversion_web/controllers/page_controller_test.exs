@@ -42,6 +42,32 @@ defmodule CurrencyConversionWeb.PageControllerTest do
     assert html_response(conn, 200) =~ "102"
   end
 
+  test "retrieves data from cache when calling GET /convert twice with the same values", %{conn: conn} do
+    expect(HTTPoison.BaseMock, :get, 1, fn _ -> {:ok, %HTTPoison.Response {
+      body: "{\"success\":true,\"result\":102,\"info\":{\"rate\": 0.5}}",
+      status_code: 200}
+    } end)
+
+    conn = get(conn, Routes.page_path(conn, :convert), %{amount: "100", from: "USD", to: "GBP", date: "2022-06-16"})
+    assert "/" = redir_path = redirected_to(conn, 302)
+
+    conn = get(conn, Routes.page_path(conn, :convert), %{amount: "100", from: "USD", to: "GBP", date: "2022-06-16"})
+    assert "/" = redir_path = redirected_to(conn, 302)
+  end
+
+  test "calls API twice when calling GET /convert twice with different values", %{conn: conn} do
+    expect(HTTPoison.BaseMock, :get, 2, fn _ -> {:ok, %HTTPoison.Response {
+      body: "{\"success\":true,\"result\":102,\"info\":{\"rate\": 0.5}}",
+      status_code: 200}
+    } end)
+
+    conn = get(conn, Routes.page_path(conn, :convert), %{amount: "100", from: "EUR", to: "GBP", date: "2022-07-16"})
+    assert "/" = redir_path = redirected_to(conn, 302)
+
+    conn = get(conn, Routes.page_path(conn, :convert), %{amount: "100", from: "USD", to: "GBP", date: "2022-06-16"})
+    assert "/" = redir_path = redirected_to(conn, 302)
+  end
+
   test "GET /convert displays error message when API returns error", %{conn: conn} do
     expect(HTTPoison.BaseMock, :get, fn _ -> {:error, %HTTPoison.Error{
       id: nil,

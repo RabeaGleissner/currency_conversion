@@ -38,7 +38,7 @@ defmodule CurrencyConversion.ApiCache do
     end
   end
 
-  def handle_call({:delete_entry, key}, _ref, state) do
+  def handle_call({:delete_entry, key}, _ref, _state) do
     :ets.delete(:currency_api_cache, key)
     {:reply, [], []}
   end

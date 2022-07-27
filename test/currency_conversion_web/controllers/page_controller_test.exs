@@ -12,6 +12,10 @@ defmodule CurrencyConversionWeb.PageControllerTest do
     end)
   end
 
+  def payload do
+    %{amount: "100", from: "USD", to: "GBP", date: "2022-06-16"}
+  end
+
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")
     assert html_response(conn, 200) =~ "Currency conversion"
@@ -23,7 +27,7 @@ defmodule CurrencyConversionWeb.PageControllerTest do
       status_code: 200}
     } end)
 
-    conn = get(conn, Routes.page_path(conn, :convert), %{amount: "100", from: "USD", to: "GBP", date: "2022-06-16"})
+    conn = get(conn, Routes.page_path(conn, :convert), payload())
 
     assert html_response(conn, 302) =~ "redirect"
     assert redirected_to(conn) == Routes.page_path(conn, :index)
@@ -35,7 +39,7 @@ defmodule CurrencyConversionWeb.PageControllerTest do
       status_code: 200}
     } end)
 
-    conn = get(conn, Routes.page_path(conn, :convert), %{amount: "100", from: "USD", to: "GBP", date: "2022-06-16"})
+    conn = get(conn, Routes.page_path(conn, :convert), payload())
     assert "/" = redir_path = redirected_to(conn, 302)
 
     conn = get(recycle(conn), redir_path)
@@ -49,10 +53,10 @@ defmodule CurrencyConversionWeb.PageControllerTest do
     } end)
 
     conn = get(conn, Routes.page_path(conn, :convert), %{amount: "100", from: "USD", to: "GBP", date: "2022-06-16"})
-    assert "/" = redir_path = redirected_to(conn, 302)
+    assert "/" = redirected_to(conn, 302)
 
     conn = get(conn, Routes.page_path(conn, :convert), %{amount: "100", from: "USD", to: "GBP", date: "2022-06-16"})
-    assert "/" = redir_path = redirected_to(conn, 302)
+    assert "/" = redirected_to(conn, 302)
   end
 
   test "calls API twice when calling GET /convert twice with different values", %{conn: conn} do
@@ -61,11 +65,11 @@ defmodule CurrencyConversionWeb.PageControllerTest do
       status_code: 200}
     } end)
 
-    conn = get(conn, Routes.page_path(conn, :convert), %{amount: "100", from: "EUR", to: "GBP", date: "2022-07-16"})
-    assert "/" = redir_path = redirected_to(conn, 302)
+    conn = get(conn, Routes.page_path(conn, :convert), %{amount: "100", from: "EUR", to: "USD", date: "2021-12-12"})
+    assert "/" = redirected_to(conn, 302)
 
     conn = get(conn, Routes.page_path(conn, :convert), %{amount: "100", from: "USD", to: "GBP", date: "2022-06-16"})
-    assert "/" = redir_path = redirected_to(conn, 302)
+    assert "/" = redirected_to(conn, 302)
   end
 
   test "GET /convert displays error message when API returns error", %{conn: conn} do
@@ -75,7 +79,7 @@ defmodule CurrencyConversionWeb.PageControllerTest do
       }
     } end)
 
-    conn = get(conn, Routes.page_path(conn, :convert), %{amount: "100", from: "USD", to: "GBP", date: "2022-06-16"})
+    conn = get(conn, Routes.page_path(conn, :convert), payload())
     assert "/" = redir_path = redirected_to(conn, 302)
 
     conn = get(recycle(conn), redir_path)

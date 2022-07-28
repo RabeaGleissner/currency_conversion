@@ -1,17 +1,19 @@
 # Currency converter from the past
 
-Easily convert amounts of money using the rates from past dates.
-
-Currency API used: https://exchangerate.host/
+A toy project to learn Phoenix.
 
 ## Technical
 
 - Using session to keep track of data
-- Caching API response with ETS
+- Caching currency API response with ETS
 - Mocking with Mox
+- styling with Tailwind
+- deployed to Heroku
 
 Next:
-- styling with Tailwind
+- handle invalid input errors
+  - future date
+  - text instead of numbers
 
 
 ### ETS table schema
@@ -19,14 +21,16 @@ Next:
 - Key: currency from + currency to
 - Value: date, rate
 
-Insert:
+```
+# Insert:
 :ets.insert_new(:api_cache, {"USDEUR", "2012/10/22", 0.45})
 
-Retrieve:
+# Retrieve:
 :ets.match_object(:api_cache, {:"USDEUR", :"2012/10/22", :"$3"})
 
-Example return data:
+# Example return data:
 [{"USDEUR", "2012/10/22", 0.45}]
+```
 
 
 ## How to run it

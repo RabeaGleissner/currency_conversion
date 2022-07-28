@@ -2,6 +2,8 @@
 
 A toy project to learn Phoenix.
 
+https://historical-currency-conversion.herokuapp.com/
+
 ## Technical
 
 - Using session to keep track of data

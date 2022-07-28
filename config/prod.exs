@@ -19,16 +19,16 @@ config :logger, level: :info
 # To get SSL working, you will need to add the `https` key
 # to the previous section and set your `:url` port to 443:
 #
-#     config :currency_conversion, CurrencyConversionWeb.Endpoint,
-#       ...,
-#       url: [host: "example.com", port: 443],
-#       https: [
-#         ...,
-#         port: 443,
-#         cipher_suite: :strong,
-#         keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
-#         certfile: System.get_env("SOME_APP_SSL_CERT_PATH")
-#       ]
+config :currency_conversion, CurrencyConversionWeb.Endpoint,
+url: [scheme: "https", host: "thawing-island-17628.herokuapp.com", port: 443],
+force_ssl: [rewrite_on: [:x_forwarded_proto]]
+
+#https: [
+  #port: 443,
+  #cipher_suite: :strong,
+  #keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
+  #certfile: System.get_env("SOME_APP_SSL_CERT_PATH")
+#]
 #
 # The `cipher_suite` is set to `:strong` to support only the
 # latest and more secure SSL ciphers. This means old browsers
@@ -43,7 +43,7 @@ config :logger, level: :info
 # We also recommend setting `force_ssl` in your endpoint, ensuring
 # no data is ever sent via http, always redirecting to https:
 #
-#     config :currency_conversion, CurrencyConversionWeb.Endpoint,
-#       force_ssl: [hsts: true]
+config :currency_conversion, CurrencyConversionWeb.Endpoint,
+force_ssl: [hsts: true]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.

@@ -14,4 +14,8 @@ defmodule CurrencyConversionWeb.PageView do
       _ -> ""
     end
   end
+
+  def uppercase(string) do
+    String.upcase(string)
+  end
 end

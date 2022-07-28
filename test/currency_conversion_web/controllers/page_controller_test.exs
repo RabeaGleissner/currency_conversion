@@ -18,7 +18,7 @@ defmodule CurrencyConversionWeb.PageControllerTest do
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")
-    assert html_response(conn, 200) =~ "Currency conversion"
+    assert html_response(conn, 200) =~ "Historical currency conversion"
   end
 
   test "GET /convert redirects to root page", %{conn: conn} do
@@ -43,7 +43,7 @@ defmodule CurrencyConversionWeb.PageControllerTest do
     assert "/" = redir_path = redirected_to(conn, 302)
 
     conn = get(recycle(conn), redir_path)
-    assert html_response(conn, 200) =~ "102"
+    assert html_response(conn, 200) =~ "GBP 102"
   end
 
   test "retrieves data from cache when calling GET /convert twice with the same values", %{conn: conn} do

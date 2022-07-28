@@ -19,7 +19,7 @@
       </div>
       <%= if @converted_amount !== "" do %>
         <p class="font-bold text-lg border-dotted border-t-2 border-cyan-200 py-3">
-        Converted amount: <%= format_amount(@converted_amount) %>
+        Converted amount: <%= uppercase(@target_currency) %> <%= format_amount(@converted_amount) %>
         </p>
       <% end %>
       <div>
